@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,37 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgotten Words Dictionary</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: 'Garamond', serif;
-            background-color: #f5f0dc;
-            color: #4a3b2b;
-            text-align: center;
-            padding: 20px;
-        }
-        .word-card {
-            background: #fff8e1;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            margin: 20px auto;
-        }
-        button {
-            background-color: #8b5e3b;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        button:disabled {
-            background-color: #d3c0a6;
-            cursor: not-allowed;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -43,11 +13,8 @@
     </header>
     
     <main>
-        <div class="word-card">
-            <h2 id="word">--</h2>
-            <p id="meaning">Meaning will appear here...</p>
-            <p id="origin">Origin: --</p>
-            <p id="example">Example: --</p>
+        <div class="word-container" id="word-container">
+            <!-- Words will be displayed here -->
         </div>
         
         <button id="next-word">Next Word</button>
@@ -72,10 +39,18 @@
         function updateWord() {
             if (wordsViewed < 3) {
                 const wordData = words[wordIndex % words.length];
-                document.getElementById("word").textContent = wordData.word;
-                document.getElementById("meaning").textContent = wordData.meaning;
-                document.getElementById("origin").textContent = "Origin: " + wordData.origin;
-                document.getElementById("example").textContent = "Example: " + wordData.example;
+                
+                const wordCard = document.createElement("div");
+                wordCard.classList.add("word-card");
+                wordCard.innerHTML = `
+                    <h2>${wordData.word}</h2>
+                    <p>${wordData.meaning}</p>
+                    <p><strong>Origin:</strong> ${wordData.origin}</p>
+                    <p><em>Example:</em> ${wordData.example}</p>
+                `;
+                
+                document.getElementById("word-container").appendChild(wordCard);
+                
                 wordsViewed++;
                 localStorage.setItem('wordsViewed', wordsViewed);
                 document.getElementById("word-count").textContent = wordsViewed;
