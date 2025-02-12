@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgotten Words Dictionary</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Garamond', serif;
+            background-color: #f5f0dc;
+            color: #4a3b2b;
+            text-align: center;
+            padding: 20px;
+        }
+        .word-card {
+            background: #fff8e1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            margin: 20px auto;
+        }
+        button {
+            background-color: #8b5e3b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:disabled {
+            background-color: #d3c0a6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📖 Forgotten Words Dictionary</h1>
+    </header>
+    
+    <main>
+        <div class="word-card">
+            <h2 id="word">--</h2>
+            <p id="meaning">Meaning will appear here...</p>
+            <p id="origin">Origin: --</p>
+            <p id="example">Example: --</p>
+        </div>
+        
+        <button id="next-word">Next Word</button>
+        <p id="progress">Words viewed today: <span id="word-count">0</span>/3</p>
+    </main>
+    
+    <footer>
+        <p>Come back tomorrow for more forgotten words! ⏳</p>
+    </footer>
+    
+    <script>
+        const words = [
+            {word: "Apricity", meaning: "The warmth of the sun in winter", origin: "Latin", example: "She basked in the apricity of the early morning sun."},
+            {word: "Susurrus", meaning: "A whispering or rustling sound", origin: "Latin", example: "The susurrus of leaves filled the air."},
+            {word: "Clinomania", meaning: "An excessive desire to stay in bed", origin: "Greek", example: "His clinomania was stronger on cold winter mornings."}
+        ];
+        
+        let wordIndex = 0;
+        let wordsViewed = localStorage.getItem('wordsViewed') || 0;
+        document.getElementById("word-count").textContent = wordsViewed;
+        
+        function updateWord() {
+            if (wordsViewed < 3) {
+                const wordData = words[wordIndex % words.length];
+                document.getElementById("word").textContent = wordData.word;
+                document.getElementById("meaning").textContent = wordData.meaning;
+                document.getElementById("origin").textContent = "Origin: " + wordData.origin;
+                document.getElementById("example").textContent = "Example: " + wordData.example;
+                wordsViewed++;
+                localStorage.setItem('wordsViewed', wordsViewed);
+                document.getElementById("word-count").textContent = wordsViewed;
+                wordIndex++;
+            }
+            if (wordsViewed >= 3) {
+                document.getElementById("next-word").disabled = true;
+            }
+        }
+        
+        document.getElementById("next-word").addEventListener("click", updateWord);
+    </script>
+</body>
+</html>
