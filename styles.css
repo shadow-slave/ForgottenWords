@@ -1,34 +1,167 @@
-      body {
-            font-family: 'Garamond', serif;
-            background-color: #f5f0dc;
-            color: #4a3b2b;
-            text-align: center;
-            padding: 20px;
-        }
-        .word-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .word-card {
-            background: #fff8e1;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 250px;
-        }
-        button {
-            background-color: #8b5e3b;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        button:disabled {
-            background-color: #d3c0a6;
-            cursor: not-allowed;
-        }
+/* Typography Improvements */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'EB Garamond', serif;
+    background-color: #f5f0dc;
+    color: #4a3b2b;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    line-height: 1.6;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #3a2e22;
+    letter-spacing: 1px;
+}
+
+p {
+    font-size: 1.1em;
+    color: #5a4a3a;
+    margin-top: 20px;
+}
+
+/* Word Container */
+.word-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* Word Card */
+.word-card {
+    width: 260px;
+    height: 260px;
+    perspective: 1000px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.word-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px #b99a79;
+
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease-in-out;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.word-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+.card-front {
+    background: #d4c2a5;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #4a3b2b;
+}
+
+.card-front:hover {
+    background: #c1af92;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+.card-back {
+    background: #fff8e1;
+    transform: rotateY(180deg);
+    text-align: left;
+    color: #4a3b2b;
+}
+
+.card-back h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #3a2e22;
+}
+
+.card-back p {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.card-back strong {
+    color: #3a2e22;
+}
+
+.card-back em {
+    font-style: italic;
+    color: #5a4a3a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .word-container {
+        gap: 20px;
+    }
+
+    .word-card {
+        width: 220px;
+        height: 220px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .card-back h2 {
+        font-size: 1.3em;
+    }
+
+    .card-back p {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .word-card {
+        width: 180px;
+        height: 180px;
+    }
+
+    .card-front {
+        font-size: 1em;
+    }
+
+    .card-back h2 {
+        font-size: 1.2em;
+    }
+
+    .card-back p {
+        font-size: 0.8em;
+    }
+}
