@@ -1,0 +1,117 @@
+/* Typography Improvements */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'EB Garamond', serif;
+    background-color: #f5f0dc;
+    color: #4a3b2b;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    line-height: 1.6;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #3a2e22;
+    letter-spacing: 1px;
+}
+
+p {
+    font-size: 1.1em;
+    color: #5a4a3a;
+    margin-top: 20px;
+}
+a{
+    text-decoration: none;
+    color: rgb(78, 77, 77);
+    cursor: pointer;
+}
+/* Viewed Words Container */
+#viewed-words-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* Viewed Word Card */
+.viewed-word-card {
+    width: 260px;
+    height: auto;
+    background: #fff8e1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s ease-in-out;
+}
+
+.viewed-word-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px #b99a79;
+}
+
+.viewed-word-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #3a2e22;
+}
+
+.viewed-word-card p {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.viewed-word-card strong {
+    color: #3a2e22;
+}
+
+.viewed-word-card em {
+    font-style: italic;
+    color: #5a4a3a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #viewed-words-container {
+        gap: 20px;
+    }
+
+    .viewed-word-card {
+        width: 220px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .viewed-word-card h2 {
+        font-size: 1.3em;
+    }
+
+    .viewed-word-card p {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .viewed-word-card {
+        width: 180px;
+        padding: 15px;
+    }
+
+    .viewed-word-card h2 {
+        font-size: 1.2em;
+    }
+
+    .viewed-word-card p {
+        font-size: 0.8em;
+    }
+}

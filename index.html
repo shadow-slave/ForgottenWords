@@ -8,55 +8,28 @@
 </head>
 <body>
     <header>
-        <h1>📖 Forgotten Words Dictionary</h1>
+        <nav>
+            <h1>📖 Forgotten Words Dictionary</h1>
+            <a href="viewed.html" class="btn">View Collected Words</a>
+        </nav>
     </header>
     
     <main>
+        <section class="intro">
+            <p>Discover forgotten words and their meanings. Flip a card to learn something new!</p>
+        </section>
+
         <div class="word-container" id="word-container">
-            <!-- Word cards will be inserted here -->
+            <!-- Word cards will be inserted here dynamically -->
         </div>
     </main>
-        <p>Come back tomorrow for more forgotten words! ⏳</p>
     
     <footer>
+        <p>Come back tomorrow for more forgotten words! ⏳</p>
+        <p>&copy; 2025 Forgotten Words Dictionary</p>
     </footer>
     
-    <script>
-        const words = [
-            {word: "Apricity", meaning: "The warmth of the sun in winter", origin: "Latin", example: "She basked in the apricity of the early morning sun."},
-            {word: "Susurrus", meaning: "A whispering or rustling sound", origin: "Latin", example: "The susurrus of leaves filled the air."},
-            {word: "Clinomania", meaning: "An excessive desire to stay in bed", origin: "Greek", example: "His clinomania was stronger on cold winter mornings."}
-        ];
-        
-        function createWordCards() {
-            const container = document.getElementById("word-container");
-            words.forEach((wordData, index) => {
-                const card = document.createElement("div");
-                card.classList.add("word-card");
-                card.innerHTML = `
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <p>Tap to reveal</p>
-                        </div>
-                        <div class="card-back">
-                            <h2>${wordData.word}</h2>
-                            <p>${wordData.meaning}</p>
-                            <p><strong>Origin:</strong> ${wordData.origin}</p>
-                            <p><em>Example:</em> ${wordData.example}</p>
-                        </div>
-                    </div>
-                `;
-                
-                card.addEventListener("click", () => {
-                    card.classList.toggle("flipped");
-                });
-                
-                container.appendChild(card);
-            });
-        }
-        
-        createWordCards();
-    </script>
+    <script src="s.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </body>
 </html>

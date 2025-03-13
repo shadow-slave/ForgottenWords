@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewed Words</title>
+    <link rel="stylesheet" href="viewed.css">
+</head>
+<body>
+    <h1>Viewed Words</h1>
+    <div id="viewed-words-container" >
+        
+    </div>
+    <a href="index.html">Back to Words</a>
+
+    <script>
+        function displayViewedWords() {
+            const container = document.getElementById("viewed-words-container");
+            const wordData = JSON.parse(localStorage.getItem("wordData")) || { viewedWords: [] };
+            const viewedWords = wordData.viewedWords || [];
+            if (viewedWords.length === 0) {
+                container.innerHTML = "<p>No words viewed yet.</p>";
+                return;
+            }
+
+            viewedWords.forEach(wordData => {
+                const card = document.createElement("div");
+                card.classList.add("viewed-word-card");
+                card.innerHTML = `
+                    <h2>${wordData.word}</h2>
+                    <p>${wordData.meaning}</p>
+                    <p><strong>Origin:</strong> ${wordData.origin}</p>
+                    <p><em>Example:</em> ${wordData.example}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+        document.addEventListener("DOMContentLoaded", displayViewedWords);
+    </script>
+    <script src="s.js"></script>
+</body>
+</html>
