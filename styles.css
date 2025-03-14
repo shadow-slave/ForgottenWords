@@ -1,6 +1,7 @@
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
 
+
 /* Root Variables */
 :root {
     --bg-color: #f5f0dc;
@@ -23,10 +24,10 @@
 
 /* Base Styles */
 body {
-    font-family: 'EB Garamond', serif, Georgia, serif;
-    background-color: var(--bg-color);
+    font-family: 'EB Garamond', serif, Georgia, serif !important;
+    background-color: var(--bg-color) !important;
     color: var(--text-color);
-    text-align: center;
+    text-align: center !important;
     padding: 1.25rem;
     margin: 0;
     line-height: 1.6;
@@ -43,6 +44,7 @@ nav {
     align-items: center;
     max-width: 900px;
     margin: auto;
+    gap: 1rem;
 }
 
 nav h1 {
@@ -51,7 +53,7 @@ nav h1 {
 }
 
 h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', serif !important;
     font-size: 2.5rem;
     margin-bottom: 1.25rem;
     color: #3a2e22;
@@ -59,9 +61,9 @@ h1 {
 }
 
 p {
-    font-size: 1.1rem;
+    font-size: 1.1rem !important;
     color: #5a4a3a;
-    margin-top: 1.25rem;
+    margin-top: 1.25rem !important;
 }
 
 /* Word Container */
@@ -76,18 +78,18 @@ p {
 
 /* Links */
 a {
-    text-decoration: none;
-    color: rgb(78, 77, 77);
-    cursor: pointer;
+    text-decoration: none !important;
+    color: rgb(78, 77, 77) !important;
+    cursor: pointer  !important;
 }
 
 /* Button */
 .btn {
-    background-color: var(--accent-color);
-    color: #ffffff;
-    font-size: 1.2rem;
-    padding: 0.625rem 1.25rem;
-    border: none;
+    background-color: var(--accent-color) !important;
+    color: #ffffff !important;
+    font-size: 1.2rem !important;
+    padding: 0.625rem 1.25rem !important;
+    border: none !important;
     border-radius: 5px;
     cursor: pointer;
     transition: transform var(--transition-speed) ease-in-out, box-shadow var(--transition-speed);
@@ -126,11 +128,20 @@ a {
     font-weight: bold;
 }
 
+/* Adjust Bootstrap alert size */
+.alert {
+    max-width: 500px; /* Reduce width */
+    margin: 20px auto; /* Center it */
+    font-size: 1rem; /* Adjust font size */
+    padding: 10px 15px; /* Reduce padding */
+    border-radius: 5px; /* Round corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow */    
+}
 
 /* Word Card */
 .word-card {
-    width: 16rem;
-    height: 16rem;
+    width: 21rem;
+    height: 21rem;
     perspective: 1000px;
     cursor: pointer;
     border-radius: 10px;
@@ -244,22 +255,30 @@ body.dark-mode .word-card .card-back em {
     color: var(--dark-text);
 }
 
+body.dark-mode footer{
+    bottom: 0;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--dark-bg);
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
 /* Responsive Design */
 @media (max-width: 768px) {
-    
-    .word-container {
-        flex-direction: column;
-        align-items: center;
-    }
 
     .word-card {
-        width: 15rem;
-        height: 16rem;
+        width: 20rem;
+        height: 20rem;
     }
     h1 {
         font-size: 2rem;
     }
-
+    nav {
+        flex-direction: column;
+        text-align: center;
+    }
+    .right-side{
+        margin: 1rem;
+    }
     .card-back h2 {
         font-size: 1.3rem;
     }
@@ -270,9 +289,12 @@ body.dark-mode .word-card .card-back em {
 }
 
 @media (max-width: 480px) {
+    .word-container{
+        padding: 0;
+    }
     .word-card {
-        width: 14.75rem;
-        height: 14.75rem;
+        width: 19rem;
+        height: 19rem;
     }
     nav {
         flex-direction: column;
@@ -280,6 +302,10 @@ body.dark-mode .word-card .card-back em {
     }
     .btn{
         font-size: 1rem;
+        margin: 1rem;
+    }
+    .right-side{
+        gap: 0;
         margin: 1rem;
     }
     .card-front {

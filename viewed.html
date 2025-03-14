@@ -6,14 +6,26 @@
     <title>Viewed Words</title>
     <link rel="stylesheet" href="viewed.css">
     <link rel="stylesheet" href="styles.css">
+    
+    
 </head>
 <body>
     <header>
         <nav>
-            <h1>📖 Viewed Words</h1>
+            <h1>📖 Your Collected Words</h1>
             <div class="right-side">
                 <button id="dark-mode-toggle" class="dark-toggle">🌙</button>
                 <a href="index.html" class="btn">Back to Words</a>
+                <select name="origin" id="origin" onchange="displayViewedWords()" class="origin-select">
+                    <option value="all" selected>All Origins</option>
+                    <option value="Latin">Latin</option>
+                    <option value="Greek">Greek</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="English">English</option>
+                </select>
             </div>
         </nav>
     </header>
@@ -38,6 +50,7 @@
         }
 
         document.getElementById("dark-mode-toggle").addEventListener("click", toggleDarkMode);
+        //hover mouse over card change color effect
 
         if (localStorage.getItem("darkMode") === "true") {
             document.getElementById("dark-mode-toggle").textContent = "☀️";
@@ -50,15 +63,23 @@
             container.innerHTML = "";
             
             const wordData = JSON.parse(localStorage.getItem("wordData")) || { viewedWords: [] };
-            const viewedWords = wordData.viewedWords || [];
-
+            let viewedWords = wordData.viewedWords || [];
             if (viewedWords.length === 0) {
                 noWordsMessage.classList.remove("hidden");
                 return;
             }
 
             noWordsMessage.classList.add("hidden");
-
+            origin= originValue();
+            //console.log(origin);
+            if (origin !== "all") {
+                viewedWords = viewedWords.filter(word => word.origin === origin);
+            }
+            //console.log(viewedWords);
+            if(viewedWords.length === 0){
+                noWordsMessage.classList.remove("hidden");
+                return;
+            }
             viewedWords.forEach(word => {
                 const card = document.createElement("div");
                 card.classList.add("viewed-word-card");
@@ -69,7 +90,11 @@
                     <p><em>Example:</em> ${word.example}</p>
                 `;
                 container.appendChild(card);
-            });
+            });  
+        }
+        function originValue(){
+            origin= document.getElementById("origin").value;
+            return origin;
         }
 
         document.addEventListener("DOMContentLoaded", displayViewedWords);

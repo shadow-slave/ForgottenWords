@@ -144,7 +144,9 @@ function createWordCards() {
       flippedDates: {},
     };
   }
-
+  if (storedData.flippedWords.length === 3) {
+    document.getElementById("word-alert").classList.remove("d-none"); // Show alert
+  }
   // Get unseen words
   let unseenWords = words.filter(
     (word) => !storedData.viewedWords.some((w) => w.word === word.word)
@@ -239,6 +241,10 @@ function handleCardFlip(card, wordData, storedData) {
   }
 
   localStorage.setItem("wordData", JSON.stringify(storedData));
+
+  if (storedData.flippedWords.length === 3) {
+     document.getElementById("word-alert").classList.remove("d-none"); // Show alert
+   }
   displayViewedWords();
 }
 
@@ -277,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // debugger;
 // let data = JSON.parse(localStorage.getItem("wordData"));
 // data.date = "2025-03-11"; // Set it to yesterday's date
-// flippedDates = {}; why in mobile click not working
+// flippedDates = {}; why in mobile click not working;
 // data.viewedWords.forEach((word) => {
 //   flippedDates[word.word] = "2025-03-10"; // Set all words to yesterday
 // });
