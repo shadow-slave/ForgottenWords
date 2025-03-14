@@ -111,64 +111,52 @@ const words = [
       "Their relationship was built on redamancy, making it feel effortless and pure.",
   },
 ];
+// words = [
+  //{ word: "Apricity", meaning: "The warmth of the sun in winter", origin: "Latin", example: "She basked in the apricity of the early morning sun." },
+ // { word: "Susurrus", meaning: "A whispering or rustling sound", origin: "Latin", example: "The susurrus of leaves filled the air." },
+ // { word: "Clinomania", meaning: "An excessive desire to stay in bed", origin: "Greek", example: "His clinomania was stronger on cold winter mornings." },
+  ///{ word: "Lethologica", meaning: "The inability to remember a particular word", origin: "Greek", example: "He experienced lethologica during
+
 function getTodayDateString() {
   return new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
 }
 
 function createWordCards() {
   const container = document.getElementById("word-container");
+  if (!container) return; // Prevent errors if element is missing
   container.innerHTML = ""; // Clear previous content
 
   let storedData = JSON.parse(localStorage.getItem("wordData")) || {
-    date: "",
-    viewedWords: [],
-    todaysWords: [],
-    flippedWords: [], // Track flipped words
+    date: "", viewedWords: [], todaysWords: [], flippedWords: [], flippedDates: {}
   };
 
   if (storedData.date !== getTodayDateString()) {
-    storedData.date = getTodayDateString();
-    storedData.todaysWords = [];
-    storedData.flippedWords = []; // Reset flipped state for the new day
+    storedData = { date: getTodayDateString(), viewedWords: [], todaysWords: [], flippedWords: [], flippedDates: {} };
   }
 
-  // Get unseen words
-  let unseenWords = words.filter(
-    (word) => !storedData.viewedWords.some((w) => w.word === word.word)
-  );
-
-  // If all words are viewed, reset the list
+  let unseenWords = words.filter(word => !storedData.viewedWords.some(w => w.word === word.word));
   if (unseenWords.length === 0) {
     storedData.viewedWords = [];
     unseenWords = [...words];
   }
 
-  // Fill today's words if needed
   while (storedData.todaysWords.length < 3 && unseenWords.length > 0) {
-    let newWord = unseenWords.splice(
-      Math.floor(Math.random() * unseenWords.length),
-      1
-    )[0];
+    let newWord = unseenWords.splice(Math.floor(Math.random() * unseenWords.length), 1)[0];
     storedData.todaysWords.push(newWord);
   }
 
   localStorage.setItem("wordData", JSON.stringify(storedData));
 
-  // Display today's words
-  storedData.todaysWords.forEach((wordData) => {
+  storedData.todaysWords.forEach(wordData => {
     const card = document.createElement("div");
     card.classList.add("word-card");
-
-    // Check if the word was flipped before
     if (storedData.flippedWords.includes(wordData.word)) {
       card.classList.add("flipped");
     }
 
     card.innerHTML = `
       <div class="card-inner">
-        <div class="card-front">
-          <p>Tap to reveal</p>
-        </div>
+        <div class="card-front"><p>Tap to reveal</p></div>
         <div class="card-back">
           <h2>${wordData.word}</h2>
           <p>${wordData.meaning}</p>
@@ -178,34 +166,29 @@ function createWordCards() {
       </div>
     `;
 
-    card.addEventListener("click", () => {
-      const today = new Date().toISOString().split("T")[0]; // Get today's date (YYYY-MM-DD)
+    function handleFlip(event) {
+      event.preventDefault(); 
+      const today = getTodayDateString();
+      storedData.flippedDates = storedData.flippedDates || {};
 
-      // Retrieve last flipped date from localStorage
-      const lastFlipped = storedData.flippedDates[wordData.word];
+      if (storedData.flippedDates[wordData.word] === today) return;
 
-      // If the word has already been flipped today, disable further flips
-      if (lastFlipped === today) {
-        return;
-      }
-
-      // Flip the card
       card.classList.toggle("flipped");
 
-      // Store the last flipped date
       storedData.flippedDates[wordData.word] = today;
-
       if (!storedData.flippedWords.includes(wordData.word)) {
         storedData.flippedWords.push(wordData.word);
       }
-
-      if (!storedData.viewedWords.some((w) => w.word === wordData.word)) {
+      if (!storedData.viewedWords.some(w => w.word === wordData.word)) {
         storedData.viewedWords.push(wordData);
       }
 
       localStorage.setItem("wordData", JSON.stringify(storedData));
       displayViewedWords();
-    });
+    }
+
+    card.addEventListener("click", handleFlip);
+    card.addEventListener("touchend", handleFlip);
 
     container.appendChild(card);
   });
@@ -213,16 +196,13 @@ function createWordCards() {
   displayViewedWords();
 }
 
-
 function displayViewedWords() {
   const viewedSection = document.getElementById("viewed-words");
+  if (!viewedSection) return; // Prevent errors if element is missing
   viewedSection.innerHTML = "";
 
-  let storedData = JSON.parse(localStorage.getItem("wordData")) || {
-    viewedWords: [],
-  };
-
-  storedData.viewedWords.forEach((word) => {
+  let storedData = JSON.parse(localStorage.getItem("wordData")) || { viewedWords: [] };
+  storedData.viewedWords.forEach(word => {
     const wordDiv = document.createElement("div");
     wordDiv.classList.add("viewed-word");
     wordDiv.innerHTML = `<h3>${word.word}</h3><p>${word.meaning}</p>`;
@@ -230,21 +210,4 @@ function displayViewedWords() {
   });
 }
 
-// Initialize
-document.addEventListener("DOMContentLoaded", () => {
-  createWordCards();
-});
-
-
-
-
-
-// debugger;
-// let data = JSON.parse(localStorage.getItem("wordData"));
-// data.date = "2025-03-11"; // Set it to yesterday's date
-// flippedDates = {};
-// data.viewedWords.forEach((word) => {
-//   flippedDates[word.word] = "2025-03-10"; // Set all words to yesterday
-// });
-// data.flippedDates = flippedDates;
-// localStorage.setItem("wordData", JSON.stringify(data));
+document.addEventListener("DOMContentLoaded", createWordCards);
