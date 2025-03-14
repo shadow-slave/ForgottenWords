@@ -1,15 +1,47 @@
 /* Typography Improvements */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
 
+/* Root Variables */
+:root {
+    --bg-color: #f5f0dc;
+    --text-color: #4a3b2b;
+    --card-bg: #fff8e1;
+    --card-shadow: rgba(0, 0, 0, 0.2);
+    --hover-shadow: #b99a79;
+    
+    /* Dark Mode Variables */
+    --dark-bg: #2b2b2b;
+    --dark-card-bg: #3a3a3a;
+    --dark-text: #f1f1f1;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+body.dark-mode h1,
+body.dark-mode p,
+body.dark-mode a {
+    color: var(--dark-text);
+}
+
+body.dark-mode .viewed-word-card {
+    background: var(--dark-card-bg);
+    color: var(--dark-text);
+}
+
 /* Base Styles */
 body {
     font-family: 'EB Garamond', serif;
-    background-color: #f5f0dc;
-    color: #4a3b2b;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     text-align: center;
     padding: 20px;
     margin: 0;
     line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
 }
 
 h1 {
@@ -25,57 +57,141 @@ p {
     color: #5a4a3a;
     margin-top: 20px;
 }
-a{
+
+/* Navigation Bar */
+body.dark-mode header {
+    background: var(--dark-card-bg);
+    padding: 1rem;
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+nav {
+    padding: 15px;
+    /* box-shadow: 0 2px 5px var(--card-shadow); */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body.dark-mode nav {
+    background: var(--dark-card-bg);
+}
+
+nav h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+.dark-toggle {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background: none;
+    color: var(--text-color);
+    transition: color 0.3s;
+}
+
+body.dark-mode .dark-toggle {
+    color: var(--dark-text);
+}
+
+/* Links */
+a {
     text-decoration: none;
     color: rgb(78, 77, 77);
     cursor: pointer;
 }
+
 /* Viewed Words Container */
 #viewed-words-container {
     display: flex;
     justify-content: center;
-    gap: 40px;
     flex-wrap: wrap;
+    gap: 20px;
     margin-top: 20px;
     padding: 20px;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 /* Viewed Word Card */
 .viewed-word-card {
     width: 260px;
     height: auto;
-    background: #fff8e1;
+    background: var(--card-bg);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--card-shadow);
     padding: 20px;
     text-align: left;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    opacity: 0;
+    animation: fadeInCard 0.5s ease-in-out forwards;
 }
 
 .viewed-word-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px #b99a79;
+    box-shadow: 0 6px 12px var(--hover-shadow);
 }
-
 .viewed-word-card h2 {
     font-family: 'Playfair Display', serif;
     font-size: 1.5em;
     margin-bottom: 10px;
-    color: #3a2e22;
+    color: var(--text-color);
 }
-
+body.dark-mode .viewed-word-card h2 {
+    color: var(--dark-text);
+}
 .viewed-word-card p {
     font-size: 1em;
     margin: 5px 0;
+    color: var(--text-color);
 }
-
 .viewed-word-card strong {
-    color: #3a2e22;
+    color: var(--text-color);
 }
-
+body.dark-mode .viewed-word-card strong {
+    color: var(--dark-text);
+}
 .viewed-word-card em {
     font-style: italic;
-    color: #5a4a3a;
+    color: var(--text-color);
+}
+body.dark-mode .viewed-word-card em {
+    color: var(--dark-text);
+}
+
+/* Dark Mode Toggle */
+.dark-mode-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    transition: color 0.3s ease-in-out;
+}
+
+body.dark-mode .dark-mode-btn {
+    color: var(--dark-text);
+}
+
+/* Animations */
+@keyframes fadeInCard {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Responsive Design */

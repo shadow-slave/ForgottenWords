@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgotten Words Dictionary</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="viewed.css">
 </head>
 <body>
     <header>
         <nav>
             <h1>📖 Forgotten Words Dictionary</h1>
-            <a href="viewed.html" class="btn">View Collected Words</a>
+            <div class="right-side">
+                <button id="dark-mode-toggle" class="dark-toggle">🌙</button>
+                <a href="viewed.html" class="btn">Viewed Words</a>
+            </div>
         </nav>
     </header>
     
@@ -18,6 +22,7 @@
         <section class="intro">
             <p>Discover forgotten words and their meanings. Flip a card to learn something new!</p>
         </section>
+        <div id="error" style="color: red; margin-top: 10px;"></div>
 
         <div class="word-container" id="word-container">
             <!-- Word cards will be inserted here dynamically -->
@@ -29,7 +34,21 @@
         <p>&copy; 2025 Forgotten Words Dictionary</p>
     </footer>
     
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> -->
+     <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            document.getElementById("dark-mode-toggle").textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+            localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+        }
+
+        document.getElementById("dark-mode-toggle").addEventListener("click", toggleDarkMode);
+
+        if (localStorage.getItem("darkMode") === "true") {
+            document.getElementById("dark-mode-toggle").textContent = "☀️";
+            document.body.classList.add("dark-mode");
+        }
+     </script>
     <script src="s.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </body>
 </html>

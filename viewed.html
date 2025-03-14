@@ -5,38 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viewed Words</title>
     <link rel="stylesheet" href="viewed.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Viewed Words</h1>
-    <div id="viewed-words-container" >
-        
-    </div>
-    <a href="index.html">Back to Words</a>
+    <header>
+        <nav>
+            <h1>📖 Viewed Words</h1>
+            <div class="right-side">
+                <button id="dark-mode-toggle" class="dark-toggle">🌙</button>
+                <a href="index.html" class="btn">Back to Words</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="viewed-words-container" class="word-list">
+            <!-- Viewed words will be dynamically inserted here -->
+        </section>
+
+        <p id="no-words-message" class="hidden">No words viewed yet. Flip a card to collect words!</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Forgotten Words Dictionary</p>
+    </footer>
 
     <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            document.getElementById("dark-mode-toggle").textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+            localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+        }
+
+        document.getElementById("dark-mode-toggle").addEventListener("click", toggleDarkMode);
+
+        if (localStorage.getItem("darkMode") === "true") {
+            document.getElementById("dark-mode-toggle").textContent = "☀️";
+            document.body.classList.add("dark-mode");
+        }
+
         function displayViewedWords() {
             const container = document.getElementById("viewed-words-container");
+            const noWordsMessage = document.getElementById("no-words-message");
+            container.innerHTML = "";
+            
             const wordData = JSON.parse(localStorage.getItem("wordData")) || { viewedWords: [] };
             const viewedWords = wordData.viewedWords || [];
+
             if (viewedWords.length === 0) {
-                container.innerHTML = "<p>No words viewed yet.</p>";
+                noWordsMessage.classList.remove("hidden");
                 return;
             }
 
-            viewedWords.forEach(wordData => {
+            noWordsMessage.classList.add("hidden");
+
+            viewedWords.forEach(word => {
                 const card = document.createElement("div");
                 card.classList.add("viewed-word-card");
                 card.innerHTML = `
-                    <h2>${wordData.word}</h2>
-                    <p>${wordData.meaning}</p>
-                    <p><strong>Origin:</strong> ${wordData.origin}</p>
-                    <p><em>Example:</em> ${wordData.example}</p>
+                    <h2>${word.word}</h2>
+                    <p>${word.meaning}</p>
+                    <p><strong>Origin:</strong> ${word.origin}</p>
+                    <p><em>Example:</em> ${word.example}</p>
                 `;
                 container.appendChild(card);
             });
         }
+
         document.addEventListener("DOMContentLoaded", displayViewedWords);
     </script>
-    <script src="s.js"></script>
 </body>
 </html>
