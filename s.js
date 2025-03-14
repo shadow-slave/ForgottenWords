@@ -165,36 +165,40 @@ function createWordCards() {
         </div>
       </div>
     `;
-
+    
     function handleFlip(event) {
       event.preventDefault(); 
+    
       const today = getTodayDateString();
       storedData.flippedDates = storedData.flippedDates || {};
-
+    
       if (storedData.flippedDates[wordData.word] === today) return;
-
-      card.classList.toggle("flipped");
-
-      storedData.flippedDates[wordData.word] = today;
-      if (!storedData.flippedWords.includes(wordData.word)) {
-        storedData.flippedWords.push(wordData.word);
+    
+      // Toggle flip only for direct tap/click (no hover effect)
+      if (event.type === "click" || (event.type === "touchend" && !moved)) {
+        card.classList.toggle("flipped");
+    
+        storedData.flippedDates[wordData.word] = today;
+        if (!storedData.flippedWords.includes(wordData.word)) {
+          storedData.flippedWords.push(wordData.word);
+        }
+        if (!storedData.viewedWords.some(w => w.word === wordData.word)) {
+          storedData.viewedWords.push(wordData);
+        }
+    
+        localStorage.setItem("wordData", JSON.stringify(storedData));
+        displayViewedWords();
       }
-      if (!storedData.viewedWords.some(w => w.word === wordData.word)) {
-        storedData.viewedWords.push(wordData);
-      }
-
-      localStorage.setItem("wordData", JSON.stringify(storedData));
-      displayViewedWords();
     }
-
+    
+    let moved = false; // Track movement for proper touch behavior
+    
     card.addEventListener("click", handleFlip);
+    card.addEventListener("touchstart", () => (moved = false)); // Reset movement on touch start
+    card.addEventListener("touchmove", () => (moved = true)); // Detect swipe movement
     card.addEventListener("touchend", handleFlip);
-
-    container.appendChild(card);
-  });
-
-  displayViewedWords();
-}
+    
+  
 
 function displayViewedWords() {
   const viewedSection = document.getElementById("viewed-words");
