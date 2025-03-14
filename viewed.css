@@ -246,7 +246,8 @@ body.dark-mode .dark-mode-btn {
     }
 
     .viewed-word-card {
-        width: 220px;
+        width: 20rem;
+        height: auto;
     }
 
     h1 {
@@ -264,7 +265,8 @@ body.dark-mode .dark-mode-btn {
 
 @media (max-width: 480px) {
     .viewed-word-card {
-        width: 180px;
+        width: 19rem;
+        height: auto;
         padding: 15px;
     }
 
